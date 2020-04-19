@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BallMovement : MonoBehaviour
 {
@@ -14,24 +15,21 @@ public class BallMovement : MonoBehaviour
     public float timerLimit;
     Vector3 initialPos;
     bool startTimer = false;
+    public Text forceText;
 
     void Start()
     {
         initialPos = new Vector3(2, 3, -20);
     }
-    void OnTriggerEnter(Collider Pit)
-    {
-        startTimer = true;
-    }
-    void OnTriggerExit(Collider Pit)
-    {
-        startTimer = false;
-    }
     void Update()
     {
-        if(Input.GetKey(KeyCode.Space) && forceReleased < forceLimit)
+        if(Input.GetKeyUp(KeyCode.UpArrow) && forceReleased < forceLimit)
         {
-            forceReleased += force * Time.deltaTime;    
+            forceReleased += force;    
+            Debug.Log(forceReleased);
+        }else if(Input.GetKeyUp(KeyCode.DownArrow) && forceReleased < forceLimit)
+        {
+            forceReleased -= force;    
             Debug.Log(forceReleased);
         }
         if (Input.GetKeyUp(KeyCode.Space))
@@ -56,6 +54,15 @@ public class BallMovement : MonoBehaviour
         {
             timer = 0;
         }
+        forceText.text = "Force:" +" " + forceReleased.ToString();
+    }
+    void OnTriggerEnter(Collider Pit)
+    {
+        startTimer = true;
+    }
+    void OnTriggerExit(Collider Pit)
+    {
+        startTimer = false;
     }
 
 }
