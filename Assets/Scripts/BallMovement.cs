@@ -14,6 +14,9 @@ public class BallMovement : MonoBehaviour
     float timer = 0;
     public float timerLimit;
     Vector3 initialPos;
+    Vector3 movement;
+    public float horizontalMovementSpeed;
+    float horizontal;
     bool startTimer = false;
     public Text forceText;
 
@@ -23,6 +26,12 @@ public class BallMovement : MonoBehaviour
     }
     void Update()
     {
+        horizontal = Input.GetAxis("Horizontal");
+
+        movement = new Vector3(horizontal, 0, 0) * horizontalMovementSpeed;
+
+        transform.position += movement * Time.deltaTime;
+
         if(Input.GetKeyUp(KeyCode.UpArrow) && forceReleased < forceLimit)
         {
             forceReleased += force;    
@@ -32,10 +41,12 @@ public class BallMovement : MonoBehaviour
             forceReleased -= force;    
             Debug.Log(forceReleased);
         }
+
         if (Input.GetKeyUp(KeyCode.Space))
         {
             ball.AddForce(Vector3.forward * forceReleased);
         }
+
         if (startTimer == true)
         {
             ball.velocity = Vector3.zero;

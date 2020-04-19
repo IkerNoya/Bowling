@@ -198,6 +198,11 @@ PrefabInstance:
       propertyPath: Pit
       value: 
       objectReference: {fileID: 641245259}
+    - target: {fileID: 6363030112549298631, guid: a2689080a0e84bb4c950e2d8a19182b9,
+        type: 3}
+      propertyPath: horizontalMovementSpeed
+      value: 5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a2689080a0e84bb4c950e2d8a19182b9, type: 3}
 --- !u!1 &335617520
