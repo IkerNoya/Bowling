@@ -4,15 +4,56 @@ using UnityEngine;
 
 public class BallMovement : MonoBehaviour
 {
-    // Start is called before the first frame update
+
+    float forceReleased = 0;
+    public float force;
+    public float forceLimit;
+    public Rigidbody ball;
+    public Collider Pit;
+    float timer = 0;
+    public float timerLimit;
+    Vector3 initialPos;
+    bool startTimer = false;
+
     void Start()
     {
-        
+        initialPos = new Vector3(2, 3, -20);
     }
-
-    // Update is called once per frame
+    void OnTriggerEnter(Collider Pit)
+    {
+        startTimer = true;
+    }
+    void OnTriggerExit(Collider Pit)
+    {
+        startTimer = false;
+    }
     void Update()
     {
-        
+        if(Input.GetKey(KeyCode.Space) && forceReleased < forceLimit)
+        {
+            forceReleased += force * Time.deltaTime;    
+            Debug.Log(forceReleased);
+        }
+        if (Input.GetKeyUp(KeyCode.Space))
+        {
+            ball.AddForce(Vector3.forward * forceReleased);
+        }
+        if (startTimer == true)
+        {
+            Debug.Log(timer);
+            timer += Time.deltaTime;
+            if (timer >= timerLimit)
+            {
+                ball.AddForce(Vector3.forward);
+                transform.position = initialPos;
+                forceReleased = 0;
+            }
+
+        }
+        else
+        {
+            timer = 0;
+        }
     }
+
 }
