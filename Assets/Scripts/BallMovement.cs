@@ -40,11 +40,13 @@ public class BallMovement : MonoBehaviour
         }
         if (startTimer == true)
         {
+            ball.velocity = Vector3.zero;
             Debug.Log(timer);
             timer += Time.deltaTime;
             if (timer >= timerLimit)
             {
-                ball.AddForce(Vector3.forward);
+                ball.velocity = Vector3.zero;
+                ball.angularVelocity = Vector3.zero;
                 transform.position = initialPos;
                 forceReleased = 0;
             }
