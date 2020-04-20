@@ -13,4 +13,8 @@ public class Menu : MonoBehaviour
     {
         SceneManager.LoadScene("Credits");
     }
+    public void OnClickC()
+    {
+        SceneManager.LoadScene("Menu");
+    }
 }
