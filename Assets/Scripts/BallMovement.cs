@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class BallMovement : MonoBehaviour
 {
@@ -9,14 +10,17 @@ public class BallMovement : MonoBehaviour
 
     float forceReleased = 0;
     float timer = 0;
+    float timerEnd = 0;
     float pinsleft = 0;
     public float force;
     public float forceLimit;
     public Rigidbody ball;
     public Collider Pit;
     float horizontal;
+    public float shotsLeft;
 
     public float timerLimit;
+    float timerEndLimit = 5;
     Vector3 initialPos;
     Vector3 movement;
     public float horizontalMovementSpeed;
@@ -24,6 +28,7 @@ public class BallMovement : MonoBehaviour
 
     public Text forceText;
     public Text pinsText;
+    public Text shotsText;
 
     void Start()
     {
@@ -57,6 +62,7 @@ public class BallMovement : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.Space))
         {
             ball.AddForce(Vector3.forward * forceReleased);
+            shotsLeft--;
         }
 
         if (startTimer == true)
@@ -80,6 +86,17 @@ public class BallMovement : MonoBehaviour
 
         forceText.text = "Force: " + forceReleased.ToString();
         pinsText.text = "Pins: " + pinsleft.ToString();
+        shotsText.text = "Shots Left: " + shotsLeft.ToString();
+
+        if(shotsLeft <= 0 || pinsleft <= 0)
+        {
+            timerEnd += Time.deltaTime;
+            if (timerEnd >= timerEndLimit)
+            {
+                timerEnd = 0;
+                SceneManager.LoadScene("End");
+            }
+        }
     }
     void OnTriggerEnter(Collider Pit)
     {
