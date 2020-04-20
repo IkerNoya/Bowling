@@ -1,40 +1,22 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class Pin : MonoBehaviour
 {
+    public bool isAlive = true;
+    public bool dead = false;
 
-    public List<GameObject> Pins = new List<GameObject>();
-    public Vector3[] initialPos;
-    public Quaternion initialRot;
-    public Rigidbody[] pinPhysics;
-    void Awake()
-    {
-        for (int i = 0; i < 10; i++)
-        {
-            initialPos[i] = Pins[i].transform.localPosition;
-            pinPhysics[i] = Pins[i].GetComponent<Rigidbody>();
-        }
-
-    }
-    void Start()
-    {
-        initialRot = Quaternion.Euler(0, 0, 0);
-    }
+    // Update is called once per frame
     void Update()
     {
-
-        if (Input.GetKeyUp(KeyCode.KeypadEnter))
+        if (transform.localRotation.z > 45 || transform.localRotation.x > 45)
         {
-            for (int i = 0; i < 10; i++)
-            {
-                Pins[i].transform.localPosition = initialPos[i];
-                Pins[i].transform.localRotation = initialRot;
-                pinPhysics[i].velocity = Vector3.zero;
-                pinPhysics[i].angularVelocity = Vector3.zero;
-            }
+            isAlive = false;
+        }
+        else
+        {
+            isAlive = true;
         }
     }
 }

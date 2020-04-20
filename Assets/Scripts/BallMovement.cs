@@ -112,15 +112,15 @@ public class BallMovement : MonoBehaviour
         for (int i = 0; i < pins.Count; i++)
         {
 
-            if (collision.gameObject == pins[i] || pins[i].transform.rotation == Quaternion.Euler(90,0,0) || pins[i].transform.localRotation == Quaternion.Euler(0, 0, 90) || pins[i].transform.localPosition.y < -10)   
+            if (((collision.gameObject == pins[i] && pins[i].GetComponent<Pin>().isAlive == true) || pins[i].transform.localPosition.y < -10) && pins[i].GetComponent<Pin>().dead == false)   
             {
                 pinsleft--;
+                pins[i].GetComponent<Pin>().dead = true;
                 if (pinsleft<0)
                 {
                     pinsleft = 0;
                 }
             }
-
         }
     }
 
