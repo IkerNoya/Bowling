@@ -112,7 +112,7 @@ public class BallMovement : MonoBehaviour
         for (int i = 0; i < pins.Count; i++)
         {
 
-            if (collision.gameObject == pins[i] || pins[i].transform.rotation == Quaternion.Euler(90,0,0) || pins[i].transform.localRotation == Quaternion.Euler(0, 0, 90) || pins[i].transform.localPosition.y < 6)   
+            if (collision.gameObject == pins[i] || pins[i].transform.rotation == Quaternion.Euler(90,0,0) || pins[i].transform.localRotation == Quaternion.Euler(0, 0, 90) || pins[i].transform.localPosition.y < -10)   
             {
                 pinsleft--;
                 if (pinsleft<0)
