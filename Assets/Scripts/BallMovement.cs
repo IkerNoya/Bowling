@@ -6,12 +6,10 @@ using UnityEngine.SceneManagement;
 
 public class BallMovement : MonoBehaviour
 {
-    public List<GameObject> pins = new List<GameObject>();
 
     float forceReleased = 0;
     float timer = 0;
     float timerEnd = 0;
-    float pinsleft = 0;
     public float force;
     public float forceLimit;
     public Rigidbody ball;
@@ -27,18 +25,11 @@ public class BallMovement : MonoBehaviour
     bool startTimer = false;
 
     public Text forceText;
-    public Text pinsText;
+
     public Text shotsText;
 
     void Start()
     {
-        for (int i = 0; i < pins.Count; i++)
-        {
-            if (pins[i].transform.localRotation == Quaternion.Euler(0, 0, 0))
-            {
-                pinsleft++;
-            }
-        }
         initialPos = new Vector3(2, 3, -20);
     }
     void Update()
@@ -49,13 +40,14 @@ public class BallMovement : MonoBehaviour
 
         transform.position += movement * Time.deltaTime;
 
-        if(Input.GetKeyUp(KeyCode.UpArrow) && forceReleased < forceLimit)
+        if (Input.GetKeyUp(KeyCode.UpArrow) && forceReleased < forceLimit)
         {
-            forceReleased += force;    
+            forceReleased += force;
             Debug.Log(forceReleased);
-        }else if(Input.GetKeyUp(KeyCode.DownArrow) && forceReleased < forceLimit)
+        }
+        else if (Input.GetKeyUp(KeyCode.DownArrow) && forceReleased < forceLimit)
         {
-            forceReleased -= force;    
+            forceReleased -= force;
             Debug.Log(forceReleased);
         }
 
@@ -85,10 +77,8 @@ public class BallMovement : MonoBehaviour
         }
 
         forceText.text = "Force: " + forceReleased.ToString();
-        pinsText.text = "Pins: " + pinsleft.ToString();
         shotsText.text = "Shots Left: " + shotsLeft.ToString();
-
-        if(shotsLeft <= 0 || pinsleft <= 0)
+        if (shotsLeft <= 0)
         {
             timerEnd += Time.deltaTime;
             if (timerEnd >= timerEndLimit)
@@ -97,6 +87,7 @@ public class BallMovement : MonoBehaviour
                 SceneManager.LoadScene("End");
             }
         }
+
     }
     void OnTriggerEnter(Collider Pit)
     {
@@ -107,21 +98,6 @@ public class BallMovement : MonoBehaviour
         startTimer = false;
     }
 
-    void OnCollisionEnter(Collision collision)
-    {
-        for (int i = 0; i < pins.Count; i++)
-        {
-
-            if (((collision.gameObject == pins[i] && pins[i].GetComponent<Pin>().isAlive == true) || pins[i].transform.localPosition.y < -10) && pins[i].GetComponent<Pin>().dead == false)   
-            {
-                pinsleft--;
-                pins[i].GetComponent<Pin>().dead = true;
-                if (pinsleft<0)
-                {
-                    pinsleft = 0;
-                }
-            }
-        }
-    }
-
+    
 }
+
